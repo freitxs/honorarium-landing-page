@@ -1,0 +1,3 @@
+[build]
+# Especifica o diretório raiz para os arquivos estáticos
+rootDir = "caminho/para/o/seu/site" 

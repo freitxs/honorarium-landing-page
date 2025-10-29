@@ -1,0 +1,3 @@
+root: .
+# Descomente a linha abaixo se for SPA (roteamento no front)
+# pushstate: enabled

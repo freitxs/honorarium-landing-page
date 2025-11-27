@@ -246,7 +246,7 @@ section {
         width: auto;
         
         /* O SEGREDO: Aumenta a imagem visualmente em 40% */
-        transform: scale(1.2); 
+        transform: scale(1.4); 
         
         /* Garante que cresça para a direita, sem sair da tela na esquerda */
         transform-origin: left center;

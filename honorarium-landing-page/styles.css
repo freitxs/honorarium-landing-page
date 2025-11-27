@@ -234,12 +234,15 @@ section {
 
 @media (min-width: 769px) {
     .site-header .container {
-        padding-inline: clamp(16px, 6vw, 48px);
+        padding-inline: clamp(24px, 6vw, 48px);
     }
 
+    /* MUDANÇA CRUCIAL: Trocamos Flexbox por GRID para centralização perfeita */
     .nav-container {
-        display: flex;
-        justify-content: flex-start;
+        display: grid;
+        /* 3 colunas: 1fr (esquerda), auto (meio fixo), 1fr (direita) */
+        /* Isso garante que a coluna do meio esteja sempre no centro matemático da tela */
+        grid-template-columns: 1fr auto 1fr;
         align-items: center;
         height: 100%;
         position: relative;
@@ -250,6 +253,7 @@ section {
         font-size: 1.75rem;
         font-weight: 700;
         color: var(--color-white);
+        justify-self: start; /* Garante que o logo fique na ponta esquerda */
     }
 
     .logo:hover {
@@ -258,13 +262,13 @@ section {
     }
 
     .nav-menu {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+        position: static;
         display: flex;
         align-items: center;
         gap: 2rem;
         white-space: nowrap;
+        /* Removemos margens automáticas pois o Grid já centraliza a coluna */
+        margin: 0; 
     }
 
     .nav-list {
@@ -307,7 +311,8 @@ section {
         display: flex;
         align-items: baseline;
         gap: 1rem;
-        margin-left: auto;
+        margin-left: 0;
+        justify-self: end; /* Garante que os botões fiquem na ponta direita */
     }
 
     .nav-toggle {
@@ -423,7 +428,7 @@ section {
 }
 
 .hero-title {
-    font-size: clamp(2.5rem, 6vw, 4.0rem);
+    font-size: clamp(0.6rem, 6vw, 4.0rem);
     font-weight: 700;
     margin-bottom: 1.5rem;
     color: #fff;
@@ -1107,4 +1112,4 @@ section {
         height: 50px !important;
         display: block !important;
     }
-}
+}   

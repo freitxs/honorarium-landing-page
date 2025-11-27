@@ -246,7 +246,7 @@ section {
         width: auto;
         
         /* O SEGREDO: Aumenta a imagem visualmente em 40% */
-        transform: scale(3.5); 
+        transform: scale(1.2); 
         
         /* Garante que cresça para a direita, sem sair da tela na esquerda */
         transform-origin: left center;
@@ -727,7 +727,6 @@ section {
     height: 50px; /* Um pouco maior no rodapé */
     width: auto;
     /* Aqui também podemos aplicar um leve zoom se necessário, mas geralmente 50px resolve */
-    transform: scale(3.5);
     transform-origin: left center;
 }
 
@@ -972,10 +971,16 @@ section {
 
     /* Logo no mobile: Sem zoom exagerado */
     .site-header .logo img {
-        height: 40px; 
-        transform: none; 
-        margin-left: 0;
-    }
+    /* O SEGREDO ESTÁ AQUI: */
+    height: 10px; /* Define uma altura fixa que cabe na barra */
+    width: auto;  /* A largura se ajusta sozinha para não distorcer */
+    
+    display: block;
+    object-fit: contain; /* Garante que a imagem inteira apareça */
+    
+    /* Se tiver alguma margem sobrando, zera ela */
+    margin: 0;
+}
 
     .hero-title { font-size: 1.8rem; }
     .hero-subtitle { font-size: 1rem; }

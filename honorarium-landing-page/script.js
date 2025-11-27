@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     /* -----------------------------
-     * 1) Menu Mobile (igual ao seu)
+     * 1) Menu Mobile
      * ----------------------------- */
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* -----------------------------
-     * 3) Fade-in on scroll (igual)
+     * 3) Fade-in on scroll
      * ----------------------------- */
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     if ("IntersectionObserver" in window) {
@@ -60,24 +60,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* -----------------------------
-     * 4) Form demo (igual ao seu)
+     * 4) Form demo (animação simples do botão)
      * ----------------------------- */
     const demoForm = document.getElementById('demo-form');
     const successMessage = document.getElementById('form-success-message');
+    // Nota: O envio real está no script do HTML (fetch). Aqui é apenas UX fallback se necessário.
     if (demoForm) {
         demoForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const submitButton = demoForm.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-            submitButton.textContent = 'Enviando...';
-            setTimeout(() => {
-                demoForm.reset();
-                demoForm.style.display = 'none';
-                if (successMessage) {
-                    successMessage.style.display = 'block';
-                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 1000);
+            // A lógica de envio real está no index.html
         });
     }
 
@@ -88,10 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const raw = (el.textContent || '').trim();
             const hasPlus = raw.startsWith('+');
             const hasPercent = raw.endsWith('%');
-
-            // extrai apenas dígitos
             const end = parseInt(raw.replace(/[^\d]/g, ''), 10) || 0;
-
             const duration = 1200;
             const startTime = performance.now();
 
@@ -116,14 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
         counters.forEach(c => obs.observe(c));
     }
 
-    /* (#3) Esteira infinita de logos (marquee) */
-    const logos = document.querySelector('.logos-container');
-    if (logos) {
-        const children = Array.from(logos.children);
-        children.forEach(node => logos.appendChild(node.cloneNode(true))); // duplica
-        logos.classList.add('marquee');
-    }
-
     /* (#8) Barra de progresso de leitura */
     const sp = document.createElement('div');
     sp.id = 'scroll-progress';
@@ -141,25 +120,19 @@ document.addEventListener("DOMContentLoaded", () => {
     onScrollProgress();
 
     /* -----------------------------
-     * 11) Hero Carousel (Novo)
+     * 11) Hero Carousel
      * ----------------------------- */
     const heroSlides = document.querySelectorAll('.hero-slide');
     if (heroSlides.length > 1) {
         let currentSlide = 0;
-        const slideInterval = 6000; // 6 segundos
+        const slideInterval = 6000; 
 
         const nextSlide = () => {
-            // Remove classe ativa do atual
             heroSlides[currentSlide].classList.remove('is-active');
-            
-            // Calcula próximo índice (loop infinito)
             currentSlide = (currentSlide + 1) % heroSlides.length;
-            
-            // Adiciona classe ativa no próximo
             heroSlides[currentSlide].classList.add('is-active');
         };
 
-        // Inicia o timer
         setInterval(nextSlide, slideInterval);
     }
 });

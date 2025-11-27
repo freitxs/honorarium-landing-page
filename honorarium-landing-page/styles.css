@@ -727,7 +727,7 @@ section {
     height: 50px; /* Um pouco maior no rodapé */
     width: auto;
     /* Aqui também podemos aplicar um leve zoom se necessário, mas geralmente 50px resolve */
-    transform: scale(9.5);
+    transform: scale(3.5);
     transform-origin: left center;
 }
 

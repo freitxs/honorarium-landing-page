@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const heroSlides = document.querySelectorAll('.hero-slide');
     if (heroSlides.length > 1) {
         let currentSlide = 0;
-        const slideInterval = 6000; 
+        const slideInterval = 7000; 
 
         const nextSlide = () => {
             heroSlides[currentSlide].classList.remove('is-active');

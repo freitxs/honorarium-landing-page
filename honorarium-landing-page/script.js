@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     /* -----------------------------
-     * 1) Menu Mobile (igual ao seu)
+     * 1) Menu Mobile
      * ----------------------------- */
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* -----------------------------
-     * 3) Fade-in on scroll (igual)
+     * 3) Fade-in on scroll
      * ----------------------------- */
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     if ("IntersectionObserver" in window) {
@@ -60,45 +60,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* -----------------------------
-     * 4) Form demo (igual ao seu)
+     * 4) Form demo (animação simples do botão)
      * ----------------------------- */
     const demoForm = document.getElementById('demo-form');
     const successMessage = document.getElementById('form-success-message');
+    // Nota: O envio real está no script do HTML (fetch). Aqui é apenas UX fallback se necessário.
     if (demoForm) {
         demoForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const submitButton = demoForm.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-            submitButton.textContent = 'Enviando...';
-            setTimeout(() => {
-                demoForm.reset();
-                demoForm.style.display = 'none';
-                if (successMessage) {
-                    successMessage.style.display = 'block';
-                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 1000);
+            // A lógica de envio real está no index.html
         });
     }
 
-    /* =====================================================
-     * NOVAS FUNCIONALIDADES (sem mudar sua estrutura HTML)
-     * ===================================================== */
-
-    /* (#1) Contadores animados (Quem Somos)
-       - Lê o texto atual de .about-stats h3 (ex: "+123", "75%")
-       - Anima de 0 até o número, preservando prefixo/sufixo (+, %)
-    */
+    /* (#1) Contadores animados (Quem Somos) */
     const counters = document.querySelectorAll('.about-stats .stat-item h3');
     if (counters.length) {
         const animateNumber = (el) => {
             const raw = (el.textContent || '').trim();
             const hasPlus = raw.startsWith('+');
             const hasPercent = raw.endsWith('%');
-
-            // extrai apenas dígitos
             const end = parseInt(raw.replace(/[^\d]/g, ''), 10) || 0;
-
             const duration = 1200;
             const startTime = performance.now();
 
@@ -123,35 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
         counters.forEach(c => obs.observe(c));
     }
 
-    /* (#2) Carrossel de depoimentos sem alterar HTML
-       - CSS já transforma .testimonials-grid em trilho com snap no mobile
-       - Aqui, opcionalmente, podemos rolar por "arraste" (nativo) ou setas (não adicionamos botões)
-    */
-
-    /* (#3) Esteira infinita de logos (marquee)
-       - Duplicamos os itens via JS e aplicamos classe .marquee (CSS anima)
-    */
-    const logos = document.querySelector('.logos-container');
-    if (logos) {
-        const children = Array.from(logos.children);
-        children.forEach(node => logos.appendChild(node.cloneNode(true))); // duplica
-        logos.classList.add('marquee');
-    }
-
-    /* (#4/#5) Hero já recebe Ken Burns/parallax pelo CSS */
-
-    /* (#6) Micro-interações já aplicadas no CSS (.btn) */
-
-    /* (#7) Realce nos cartões já aplicado no CSS (.benefit-card::after) */
-
-    /* (#8) Barra de progresso de leitura (injetada sem mudar HTML)
-       - cria <div id="scroll-progress"> e controla a largura conforme scroll
-    */
+    /* (#8) Barra de progresso de leitura */
     const sp = document.createElement('div');
     sp.id = 'scroll-progress';
     sp.className = 'scroll-progress';
     document.body.appendChild(sp);
-
 
     const onScrollProgress = () => {
         const h = document.documentElement;
@@ -163,8 +119,20 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('resize', onScrollProgress);
     onScrollProgress();
 
-    /* (#9) Anchor offset já resolvido no CSS com [id]{scroll-margin-top} */
+    /* -----------------------------
+     * 11) Hero Carousel
+     * ----------------------------- */
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    if (heroSlides.length > 1) {
+        let currentSlide = 0;
+        const slideInterval = 6000; 
 
-    /* (#10) Chips com scroll no mobile (CSS já cobre)
-    */
+        const nextSlide = () => {
+            heroSlides[currentSlide].classList.remove('is-active');
+            currentSlide = (currentSlide + 1) % heroSlides.length;
+            heroSlides[currentSlide].classList.add('is-active');
+        };
+
+        setInterval(nextSlide, slideInterval);
+    }
 });

@@ -3,7 +3,7 @@
    =================== */
 :root {
     --color-black: #0b0b0d;
-    --color-gold: ##39ae49;
+    --color-gold: #39ae49;
     --color-white: #FFFFFF;
 
     --color-gray-light: #E0B84E;
@@ -11,10 +11,10 @@
     --color-gray-text-light: #aeb0b3;
     --color-gray-border: #2a2a2e;
 
-    --gold-400: #E0B84E;
-    --gold-500: #D4AF37;
-    --gold-600: #C9A227;
-    --gold-700: #B89018;
+    --gold-400: #39ae49;
+    --gold-500: #39ae49;
+    --gold-600: #39ae49;
+    --gold-700: #39ae49;
 
     --font-primary: 'Poppins', sans-serif;
     --font-secondary: 'Inter', sans-serif;
@@ -246,7 +246,7 @@ section {
         width: auto;
         
         /* O SEGREDO: Aumenta a imagem visualmente em 40% */
-        transform: scale(1.2); 
+        transform: scale(1.4); 
         
         /* Garante que cresça para a direita, sem sair da tela na esquerda */
         transform-origin: left center;

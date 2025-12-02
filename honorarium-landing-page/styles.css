@@ -21,7 +21,7 @@
 
     --container-width: 1140px;
     
-    /* ALTERAÇÃO: Altura base menor para mobile (60px) */
+    /* Altura base menor para mobile (60px) */
     --header-height: 60px;
     
     --border-radius: 8px;
@@ -113,7 +113,7 @@ input, button, textarea, select {
 .container {
     max-width: var(--container-width);
     margin-inline: auto;
-    /* ALTERAÇÃO: Adicionado padding de 1.5rem para desgrudar das bordas no mobile */
+    /* Padding lateral para evitar que o conteúdo cole na borda */
     padding-inline: 1.5rem; 
 }
 
@@ -216,12 +216,11 @@ section {
 .site-header .container {
     max-width: none;
     width: 100%;
-    /* O padding já é controlado pela classe .container global agora */
 }
 
 /* Mídia Query Desktop Principal */
 @media (min-width: 769px) {
-    /* ALTERAÇÃO: Redefine a altura do header para 90px apenas no desktop */
+    /* Redefine a altura do header para 90px apenas no desktop */
     :root {
         --header-height: 90px;
     }
@@ -247,19 +246,11 @@ section {
     }
 
     .logo img {
-        /* Altura base segura */
         height: 60px; 
         width: auto;
-        
-        /* O SEGREDO: Aumenta a imagem visualmente em 40% */
         transform: scale(1.4); 
-        
-        /* Garante que cresça para a direita, sem sair da tela na esquerda */
         transform-origin: left center;
-        
-        /* Margem de segurança */
         margin-left: 5px;
-        
         display: block;
     }
 
@@ -732,7 +723,6 @@ section {
 .footer-col .logo img {
     height: 50px; /* Um pouco maior no rodapé */
     width: auto;
-    /* Aqui também podemos aplicar um leve zoom se necessário, mas geralmente 50px resolve */
     transform-origin: left center;
 }
 
@@ -892,7 +882,17 @@ section {
     h2.section-title { font-size: 2rem; }
     section { padding: 4rem 0; }
 
-    /* MENU MOBILE */
+    /* CORREÇÃO DO HEADER MOBILE AQUI */
+    /* 1. Define o container como FLEX para que logo e menu fiquem na mesma linha */
+    .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        width: 100%;
+    }
+
+    /* 2. Menu Hamburguer */
     .nav-toggle {
         display: flex; /* Flex para centralizar o ícone */
         align-items: center;
@@ -902,7 +902,7 @@ section {
         cursor: pointer;
         padding: 0.5rem;
         z-index: 1100;
-        justify-self: end; /* Alinha na direita do grid */
+        /* Removemos justify-self pois o pai agora é flex */
     }
 
     .hamburger {
@@ -942,7 +942,7 @@ section {
         clip-path: circle(0% at top right);
         transition: clip-path 0.5s ease-out;
         margin: 0;
-        z-index: 1050; /* Garante que fique acima de tudo menos do botão */
+        z-index: 1050; 
     }
 
     .nav-menu.is-active {
@@ -959,7 +959,6 @@ section {
 
     .nav-buttons { display: none; }
 
-    /* Botoes mobile aparecem no menu */
     .nav-menu.is-active + .nav-buttons {
         display: flex;
         flex-direction: column;
@@ -977,14 +976,13 @@ section {
         text-align: center;
     }
 
-    /* ALTERAÇÃO: Logo corrigida no mobile (era 10px, agora 35px) */
+    /* 3. Correção da Logo no Mobile */
     .site-header .logo img {
-        height: 35px; 
+        height: 32px; /* Ajuste fino para 32px para equilibrar melhor com o ícone do menu */
         width: auto;  
         display: block;
         object-fit: contain; 
         margin: 0;
-        transform: translateY(2px); /* Ajuste fino de alinhamento vertical */
     }
 
     .hero-title { font-size: 1.8rem; }

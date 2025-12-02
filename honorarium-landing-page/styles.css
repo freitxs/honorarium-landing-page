@@ -867,7 +867,7 @@ section {
 }
 
 /* ===================
-   RESPONSIVIDADE
+   RESPONSIVIDADE (MOBILE / TABLET)
    =================== */
 
 /* Tablet (medium) - 1024px */
@@ -877,13 +877,14 @@ section {
     .footer-container { grid-template-columns: 1fr 1fr; }
 }
 
-/* Tablet (small) - 768px */
+/* Tablet (small) e Mobile - 768px */
 @media (max-width: 768px) {
     h2.section-title { font-size: 2rem; }
     section { padding: 4rem 0; }
 
-    /* CORREÇÃO DO HEADER MOBILE AQUI */
-    /* 1. Define o container como FLEX para que logo e menu fiquem na mesma linha */
+    /* =========================
+       1. CABEÇALHO MOBILE (Logo e Ícone)
+       ========================= */
     .nav-container {
         display: flex;
         align-items: center;
@@ -892,22 +893,21 @@ section {
         width: 100%;
     }
 
-    /* 2. Menu Hamburguer */
+    /* Botão Hamburger */
     .nav-toggle {
-        display: flex; /* Flex para centralizar o ícone */
+        display: flex;
         align-items: center;
         justify-content: center;
         background: transparent;
         border: none;
         cursor: pointer;
         padding: 0.5rem;
-        z-index: 1100;
-        /* Removemos justify-self pois o pai agora é flex */
+        z-index: 1100; /* Fica acima do menu aberto */
     }
 
     .hamburger {
         display: block;
-        width: 24px;
+        width: 26px; /* Levemente maior */
         height: 2px;
         background-color: var(--color-white);
         position: relative;
@@ -925,23 +925,49 @@ section {
         transition: transform 0.3s ease, top 0.3s ease, bottom 0.3s ease;
     }
 
-    .hamburger::before { top: -7px; }
-    .hamburger::after { bottom: -7px; }
+    .hamburger::before { top: -8px; }
+    .hamburger::after { bottom: -8px; }
 
+    /* Animação do X quando ativo */
+    .nav-toggle.is-active .hamburger { background-color: transparent; }
+    .nav-toggle.is-active .hamburger::before { transform: rotate(45deg); top: 0; }
+    .nav-toggle.is-active .hamburger::after { transform: rotate(-45deg); bottom: 0; }
 
+    /* Logo Mobile */
+    .site-header .logo img {
+        height: 32px; 
+        width: auto;  
+        display: block;
+        object-fit: contain; 
+        margin: 0;
+    }
+
+    /* =========================
+       2. MENU ABERTO (Estilo Premium)
+       ========================= */
     .nav-menu {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100vh;
-        background-color: var(--color-black);
+        
+        /* Fundo escuro com leve transparência e desfoque (Glassmorphism) */
+        background-color: rgba(7, 7, 10, 0.96);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        
+        display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: center; /* Centraliza verticalmente */
         align-items: center;
+        
+        /* Animação de abertura circular */
         clip-path: circle(0% at top right);
-        transition: clip-path 0.5s ease-out;
+        transition: clip-path 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        
         margin: 0;
+        padding-bottom: 20vh; /* Espaço para não cobrir os botões no final */
         z-index: 1050; 
     }
 
@@ -950,44 +976,65 @@ section {
     }
 
     .nav-list {
+        display: flex;
         flex-direction: column;
         text-align: center;
-        gap: 2rem;
+        gap: 2.5rem; /* Mais espaçamento entre os links */
+        width: 100%;
     }
 
-    .nav-link { font-size: 1.5rem; }
+    /* Estilo dos Links no Menu Mobile */
+    .nav-link {
+        font-family: var(--font-primary);
+        font-size: 1.75rem; /* Texto maior */
+        font-weight: 600;
+        color: var(--color-white); /* Branco puro */
+        text-transform: capitalize;
+        transition: color 0.3s ease;
+    }
 
-    .nav-buttons { display: none; }
+    .nav-link:hover {
+        color: var(--color-gold);
+    }
 
+    /* Botões (Área do Cliente / Agendar) dentro do menu mobile */
+    .nav-buttons {
+        display: none; /* Esconde o padrão do desktop */
+    }
+
+    /* Quando o menu abre, mostramos os botões flutuando embaixo */
     .nav-menu.is-active + .nav-buttons {
         display: flex;
         flex-direction: column;
         gap: 1rem;
         position: absolute;
-        bottom: 10vh;
+        bottom: 8vh; /* Fixado na parte de baixo da tela */
         left: 50%;
         transform: translateX(-50%);
-        width: 80%;
+        width: 85%; /* Ocupa boa largura */
         z-index: 1060;
+        opacity: 0;
+        animation: fadeInUp 0.6s ease forwards 0.3s; /* Atraso na entrada */
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translate(-50%, 20px); }
+        to { opacity: 1; transform: translate(-50%, 0); }
     }
 
     .nav-menu.is-active + .nav-buttons .btn {
         width: 100%;
         text-align: center;
+        padding: 1rem;
+        font-size: 1rem;
     }
 
-    /* 3. Correção da Logo no Mobile */
-    .site-header .logo img {
-        height: 32px; /* Ajuste fino para 32px para equilibrar melhor com o ícone do menu */
-        width: auto;  
-        display: block;
-        object-fit: contain; 
-        margin: 0;
-    }
-
+    /* =========================
+       3. OUTROS AJUSTES GERAIS MOBILE
+       ========================= */
     .hero-title { font-size: 1.8rem; }
     .hero-subtitle { font-size: 1rem; }
-
+    
     .support-grid { grid-template-columns: 1fr; }
     #demo-form { grid-template-columns: 1fr; }
 

@@ -3,7 +3,7 @@
    =================== */
 :root {
     --color-black: #0b0b0d;
-    --color-gold: #D4AF37;
+    --color-gold: #39ae49;
     --color-white: #FFFFFF;
 
     --color-gray-light: #E0B84E;
@@ -11,18 +11,18 @@
     --color-gray-text-light: #aeb0b3;
     --color-gray-border: #2a2a2e;
 
-    --gold-400: #E0B84E;
-    --gold-500: #D4AF37;
-    --gold-600: #C9A227;
-    --gold-700: #B89018;
+    --gold-400: #39ae49;
+    --gold-500: #39ae49;
+    --gold-600: #39ae49;
+    --gold-700: #39ae49;
 
     --font-primary: 'Poppins', sans-serif;
     --font-secondary: 'Inter', sans-serif;
 
     --container-width: 1140px;
     
-    /* AUMENTADO: De 80px para 90px para dar respiro à logo maior */
-    --header-height: 80px;
+    /* Altura base menor para mobile (60px) */
+    --header-height: 60px;
     
     --border-radius: 8px;
 }
@@ -113,7 +113,8 @@ input, button, textarea, select {
 .container {
     max-width: var(--container-width);
     margin-inline: auto;
-    padding-inline: 0rem;
+    /* Padding lateral para evitar que o conteúdo cole na borda */
+    padding-inline: 1.5rem; 
 }
 
 .btn {
@@ -215,11 +216,15 @@ section {
 .site-header .container {
     max-width: none;
     width: 100%;
-    padding-right: 0;
-    padding-left: 0;
 }
 
+/* Mídia Query Desktop Principal */
 @media (min-width: 769px) {
+    /* Redefine a altura do header para 90px apenas no desktop */
+    :root {
+        --header-height: 90px;
+    }
+
     .site-header .container {
         padding-inline: clamp(24px, 6vw, 48px);
     }
@@ -233,7 +238,7 @@ section {
         position: relative;
     }
 
-    /* === LOGO COM ZOOM (HEADER) === */
+    /* === LOGO COM ZOOM (HEADER DESKTOP) === */
     .logo {
         justify-self: start;
         display: block;
@@ -241,19 +246,11 @@ section {
     }
 
     .logo img {
-        /* Altura base segura */
         height: 60px; 
         width: auto;
-        
-        /* O SEGREDO: Aumenta a imagem visualmente em 40% */
-        transform: scale(1.2); 
-        
-        /* Garante que cresça para a direita, sem sair da tela na esquerda */
+        transform: scale(1.4); 
         transform-origin: left center;
-        
-        /* Margem de segurança */
         margin-left: 5px;
-        
         display: block;
     }
 
@@ -726,7 +723,6 @@ section {
 .footer-col .logo img {
     height: 50px; /* Um pouco maior no rodapé */
     width: auto;
-    /* Aqui também podemos aplicar um leve zoom se necessário, mas geralmente 50px resolve */
     transform-origin: left center;
 }
 
@@ -871,7 +867,7 @@ section {
 }
 
 /* ===================
-   RESPONSIVIDADE
+   RESPONSIVIDADE (MOBILE / TABLET)
    =================== */
 
 /* Tablet (medium) - 1024px */
@@ -881,25 +877,37 @@ section {
     .footer-container { grid-template-columns: 1fr 1fr; }
 }
 
-/* Tablet (small) - 768px */
+/* Tablet (small) e Mobile - 768px */
 @media (max-width: 768px) {
     h2.section-title { font-size: 2rem; }
     section { padding: 4rem 0; }
 
-    /* MENU MOBILE */
+    /* =========================
+       1. CABEÇALHO MOBILE (Logo e Ícone)
+       ========================= */
+    .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        width: 100%;
+    }
+
+    /* Botão Hamburger */
     .nav-toggle {
-        display: block; /* Garante que o botão hambúrguer apareça */
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background: transparent;
         border: none;
         cursor: pointer;
         padding: 0.5rem;
-        z-index: 1100;
-        justify-self: end; /* Alinha na direita do grid */
+        z-index: 1100; /* Fica acima do menu aberto */
     }
 
     .hamburger {
         display: block;
-        width: 24px;
+        width: 26px; /* Levemente maior */
         height: 2px;
         background-color: var(--color-white);
         position: relative;
@@ -917,24 +925,50 @@ section {
         transition: transform 0.3s ease, top 0.3s ease, bottom 0.3s ease;
     }
 
-    .hamburger::before { top: -7px; }
-    .hamburger::after { bottom: -7px; }
+    .hamburger::before { top: -8px; }
+    .hamburger::after { bottom: -8px; }
 
+    /* Animação do X quando ativo */
+    .nav-toggle.is-active .hamburger { background-color: transparent; }
+    .nav-toggle.is-active .hamburger::before { transform: rotate(45deg); top: 0; }
+    .nav-toggle.is-active .hamburger::after { transform: rotate(-45deg); bottom: 0; }
 
+    /* Logo Mobile */
+    .site-header .logo img {
+        height: 32px; 
+        width: auto;  
+        display: block;
+        object-fit: contain; 
+        margin: 0;
+    }
+
+    /* =========================
+       2. MENU ABERTO (Estilo Premium)
+       ========================= */
     .nav-menu {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100vh;
-        background-color: var(--color-black);
+        
+        /* Fundo escuro com leve transparência e desfoque (Glassmorphism) */
+        background-color: rgba(7, 7, 10, 0.96);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        
+        display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: center; /* Centraliza verticalmente */
         align-items: center;
+        
+        /* Animação de abertura circular */
         clip-path: circle(0% at top right);
-        transition: clip-path 0.5s ease-out;
+        transition: clip-path 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        
         margin: 0;
-        z-index: 1050; /* Garante que fique acima de tudo menos do botão */
+        padding-bottom: 20vh; /* Espaço para não cobrir os botões no final */
+        z-index: 1050; 
     }
 
     .nav-menu.is-active {
@@ -942,49 +976,65 @@ section {
     }
 
     .nav-list {
+        display: flex;
         flex-direction: column;
         text-align: center;
-        gap: 2rem;
+        gap: 2.5rem; /* Mais espaçamento entre os links */
+        width: 100%;
     }
 
-    .nav-link { font-size: 1.5rem; }
+    /* Estilo dos Links no Menu Mobile */
+    .nav-link {
+        font-family: var(--font-primary);
+        font-size: 1.75rem; /* Texto maior */
+        font-weight: 600;
+        color: var(--color-white); /* Branco puro */
+        text-transform: capitalize;
+        transition: color 0.3s ease;
+    }
 
-    .nav-buttons { display: none; }
+    .nav-link:hover {
+        color: var(--color-gold);
+    }
 
-    /* Botoes mobile aparecem no menu */
+    /* Botões (Área do Cliente / Agendar) dentro do menu mobile */
+    .nav-buttons {
+        display: none; /* Esconde o padrão do desktop */
+    }
+
+    /* Quando o menu abre, mostramos os botões flutuando embaixo */
     .nav-menu.is-active + .nav-buttons {
         display: flex;
         flex-direction: column;
         gap: 1rem;
         position: absolute;
-        bottom: 10vh;
+        bottom: 8vh; /* Fixado na parte de baixo da tela */
         left: 50%;
         transform: translateX(-50%);
-        width: 80%;
+        width: 85%; /* Ocupa boa largura */
         z-index: 1060;
+        opacity: 0;
+        animation: fadeInUp 0.6s ease forwards 0.3s; /* Atraso na entrada */
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translate(-50%, 20px); }
+        to { opacity: 1; transform: translate(-50%, 0); }
     }
 
     .nav-menu.is-active + .nav-buttons .btn {
         width: 100%;
         text-align: center;
+        padding: 1rem;
+        font-size: 1rem;
     }
 
-    /* Logo no mobile: Sem zoom exagerado */
-    .site-header .logo img {
-    /* O SEGREDO ESTÁ AQUI: */
-    height: 10px; /* Define uma altura fixa que cabe na barra */
-    width: auto;  /* A largura se ajusta sozinha para não distorcer */
-    
-    display: block;
-    object-fit: contain; /* Garante que a imagem inteira apareça */
-    
-    /* Se tiver alguma margem sobrando, zera ela */
-    margin: 0;
-}
-
+    /* =========================
+       3. OUTROS AJUSTES GERAIS MOBILE
+       ========================= */
     .hero-title { font-size: 1.8rem; }
     .hero-subtitle { font-size: 1rem; }
-
+    
     .support-grid { grid-template-columns: 1fr; }
     #demo-form { grid-template-columns: 1fr; }
 
